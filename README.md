@@ -1,6 +1,6 @@
 # Function which triggers emails on Oracle Autonomous Transaction Processing Database events
 
-This function will send email notification (to a configurable address) when a new instance of [Oracle ATP Database](https://docs.cloud.oracle.com/iaas/Content/Database/Concepts/atpoverview.htm) is created (with a specific tag) and also after the instance provisioning completes. Notifications are powered by [Oracle Cloud Infrastructure Email Delivery](https://docs.cloud.oracle.com/iaas/Content/Email/Concepts/overview.htm)
+This function will send email notification (to a configurable address) when a new instance of [Oracle ATP Database](https://docs.cloud.oracle.com/iaas/Content/Database/Concepts/atpoverview.htm) is created (with a specific tag) and also after the instance provisioning completes. Notifications are powered by [Oracle Cloud Infrastructure Email Delivery](https://docs.cloud.oracle.com/iaas/Content/Email/Concepts/overview.htm). It's a Go function just uses the plain old [SMTP package in Go](https://golang.org/pkg/net/smtp/) to send emails
 
 For example, as soon as the instance creation starts, you'll get an email with a subject and body which similar to below
 
@@ -13,8 +13,6 @@ ATP Database instance DB FOOBAR in status PROVISIONING
 ATP Database instance DB FOOBAR in status PROVISIONING
 Instance OCID: ocid1.autonomousdatabase.oc1.phx.abyhqljt4i2hwwtg5l7nkpeu5bm5hx42dtegb7wxvykswl4q4lsmxwuudevq
 
-It's a Go function just uses the plain old [SMTP package in Go](https://golang.org/pkg/net/smtp/) to send emails
-
 ## Pre-requisites
 
 ### Configure OCI Email Delivery
@@ -23,7 +21,7 @@ It's a Go function just uses the plain old [SMTP package in Go](https://golang.o
 - [Add approved sender](https://docs.cloud.oracle.com/iaas/Content/Email/Tasks/managingapprovedsenders.htm) - use `OCI_EMAIL_DELIVERY_APPROVED_SENDER` parameter to configure this in the app
 - [Note down value for the SMTP server](https://docs.cloud.oracle.com/iaas/Content/Email/Tasks/configuresmtpconnection.htm) - it'll be used in the `OCI_EMAIL_DELIVERY_SMTP_SERVER` configuration attribute
 
-Clone this repo
+Clone this repo - `git clone https://github.com/abhirockzz/fn-atp-event-notification-app`
 
 ### Switch to correct context
 
@@ -46,9 +44,7 @@ e.g.
 
 `fn inspect app fn-atp-event-notification-app`
 
-## Moving on...
-
-Deploy the app...
+## Deploy the app
 
 `cd fn-atp-event-notification-app` and `fn -v deploy --app fn-atp-event-notification-app`
 
@@ -56,11 +52,11 @@ Deploy the app...
 
 ### Standalone
 
-To test without end-to-end Events integration, just simulate the instance creation and completion events by sending the sample payloads included in the source
+To test without end-to-end Events integration, just simulate the instance creation and completion events by using the sample payloads included in the source to invoke the function *manually*
 
-- To test instance creation event - `cat atp-create-start.json | fn invoke fn-atp-event-notification-app notifyonevent`
+- To test instance **creation** event - `cat atp-create-start.json | fn invoke fn-atp-event-notification-app notifyonevent`
 
-- To test instance creation completion event - `cat atp-create-end.json | fn invoke fn-atp-event-notification-app notifyonevent`
+- To test instance creation **completion** event - `cat atp-create-end.json | fn invoke fn-atp-event-notification-app notifyonevent`
 
 You should recieve the emails
 
@@ -76,13 +72,13 @@ Go ahead and create the rule...
 
 `oci --profile <oci-config-profile-name> cloud-events rule create --display-name <display-name> --is-enabled true --condition '{"eventType":["com.oraclecloud.dbaas.autonomous.database.instance.create.begin","com.oraclecloud.dbaas.autonomous.database.instance.create.end"],"data":{"freeformTags":{<custom-tag-key-value-pair>}}}' --compartment-id <compartment-ocid> --actions file://<filename>.json`
 
-Replace `<bucket-name>` with the (input) Object Storage bucket name where you will upload the text file
+Replace `<custom-tag-key-value-pair>` with the tag you want to use while creating the ATP instance (details below)
 
 e.g.
 
 `oci --profile my-oci-profile cloud-events rule create --display-name invoke-function-on-atp-events --is-enabled true --condition '{"eventType":["com.oraclecloud.dbaas.autonomous.database.instance.create.begin","com.oraclecloud.dbaas.autonomous.database.instance.create.end"],"data":{"freeformTags":{"created_by":"foobar"}}}' --compartment-id ocid1.compartment.oc1..aaaaaaaaokbzj2jn3hf5kwdwqoxl2dq7u54p3tsmxrjd7s3uu7x23tkegiua --actions file://actions.json`
 
-> Note `"created_by":"foobar"` used as the value in `"freeformTags"`. You can change this if you want to. Jsut ensure that you use the correct tag while creating the Oracle ATP DB instance
+> Note `"created_by":"foobar"` is used as the value in `"freeformTags"`. You can change this if you want to. Jsut ensure that you use the correct tag while creating the Oracle ATP DB instance
 
 **Provision Oracle ATP Database instance**
 
