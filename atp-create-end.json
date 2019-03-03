@@ -1,0 +1,33 @@
+{
+    "cloudEventsVersion": "0.1",
+    "eventID": "42422c14-c320-4265-b5a1-88c4f277b342",
+    "eventType": "com.oraclecloud.dbaas.autonomous.database.instance.create.end",
+    "source": "/service/dbaas/resourceType/autonomousDatabase",
+    "eventTypeVersion": "1.0",
+    "eventTime": "2019-03-03T05:38:43Z",
+    "schemaURL": null,
+    "contentType": "application/json",
+    "extensions": {
+        "compartmentId": "ocid1.compartment.oc1..aaaaaaaaokbzj4jn4hf4kwdwqoxl2dq7u42p3tsmxrjd7s3uu7x42tkegiur"
+    },
+    "data": {
+        "id": "ocid1.autonomousdatabase.oc1.phx.abyhqljsazyqk2vs4gdqdbb2ndbbnyznnig427durdvowzodt427chjovp7q",
+        "availabilityDomain": "xqgA:PHX-AD-2",
+        "cpuCoreCount": 1,
+        "dataStorageSizeInTBs": 1,
+        "lifecycleState": "AVAILABLE",
+        "backupLifecycleState": null,
+        "definedTags": {},
+        "displayName": "ATPDB FOOBAR",
+        "freeformTags": {
+            "created_by": "foobaruser"
+        },
+        "timeCreated": "2019-03-03T05:35:38.469Z",
+        "timeUpdated": "2019-03-03T05:38:43.045Z",
+        "tenantId": null,
+        "compartmentId": null,
+        "dbName": null,
+        "licenseType": null,
+        "serviceConsoleUrl": null
+    }
+}

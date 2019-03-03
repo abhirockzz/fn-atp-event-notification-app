@@ -1,0 +1,10 @@
+{
+  "actions": [
+    {
+      "actionType": "FAAS",
+      "description": "Invoke function on ATP instance creation begin and completion events",
+      "isEnabled": true,
+      "functionId": "<replace-function-ocid>"
+    }
+  ]
+}
