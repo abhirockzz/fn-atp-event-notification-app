@@ -1,6 +1,6 @@
 # Function which triggers emails on Oracle Autonomous Transaction Processing Database events
 
-This function will send email notification (to a configurable address) when a new instance of [Oracle ATP Database](https://docs.cloud.oracle.com/iaas/Content/Database/Concepts/atpoverview.htm) is created (with a specific tag) and also after the instance provisioning completes. Notifications are powered by [Oracle Cloud Infrastructure Email Delivery](https://docs.cloud.oracle.com/iaas/Content/Email/Concepts/overview.htm). It's a Go function just uses the plain old [SMTP package in Go](https://golang.org/pkg/net/smtp/) to send emails
+This function will send email notification (to a configurable address) when a new instance of [Oracle ATP Database](https://docs.cloud.oracle.com/iaas/Content/Database/Concepts/atpoverview.htm) is created (with a specific tag) and also after the instance provisioning completes. Notifications are powered by [Oracle Cloud Infrastructure Email Delivery](https://docs.cloud.oracle.com/iaas/Content/Email/Concepts/overview.htm). It's a Go function which uses the [SMTP package in Go](https://golang.org/pkg/net/smtp/) to send emails
 
 For example, as soon as the instance creation starts, you'll get an email with a subject and body which similar to below
 
