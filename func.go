@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/smtp"
+	"strings"
 	"time"
 
 	fdk "github.com/fnproject/fdk-go"
@@ -49,8 +50,8 @@ func sendEmailNotification(username, password, ociSMTPServer, approvedOCIEmailDe
 	log.Println("sending email notification")
 
 	auth := smtp.PlainAuth("", username, password, ociSMTPServer)
-
-	to := []string{emailRecepientAddress}
+	to := strings.Split(emailRecepientAddress, ",")
+	//to := []string{emailRecepientAddress}
 	subject := "ATP Database instance " + eventDetails.DisplayName + " in status " + eventDetails.LifecycleState
 	body := subject + "\n" + "Instance OCID: " + eventDetails.ID
 	msg := []byte("To: " + emailRecepientAddress + "\r\n" +

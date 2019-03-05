@@ -32,7 +32,7 @@ Clone this repo - `git clone https://github.com/abhirockzz/fn-atp-event-notifica
 
 `fn create app --annotation oracle.com/oci/subnetIds=<SUBNETS> --config OCI_EMAIL_DELIVERY_USER_OCID=<OCI_EMAIL_DELIVERY_USER_OCID> --config OCI_EMAIL_DELIVERY_USER_PASSWORD=<OCI_EMAIL_DELIVERY_USER_PASSWORD> --config OCI_EMAIL_DELIVERY_SMTP_SERVER=<OCI_EMAIL_DELIVERY_SMTP_SERVER> --config OCI_EMAIL_DELIVERY_APPROVED_SENDER=<OCI_EMAIL_DELIVERY_APPROVED_SENDER> --config EMAIL_NOTIFICAITON_RECEPIENT_ADDRESS=<EMAIL_NOTIFICAITON_RECEPIENT_ADDRESS> fn-atp-event-notification-app`
 
-> please provide a valid email address for `EMAIL_NOTIFICAITON_RECEPIENT_ADDRESS`
+> Please provide a valid email address for `EMAIL_NOTIFICAITON_RECEPIENT_ADDRESS`. It is also possible to provide multiple email addresses separated by a comma (`,`) e.g. `foo@gmail.com,bar@gmail.com`
 
 e.g.
 
